@@ -204,8 +204,9 @@ class DoublyLinkedList:
             y = value
           else:
             pass
-          if current_node == self.tail:
-            break
+          # if current_node == self.tail:
+          #   break
           current_node = current_node.next
+          x += 1
         return y
         
