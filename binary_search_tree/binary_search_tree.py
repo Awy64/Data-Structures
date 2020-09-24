@@ -1,3 +1,5 @@
+from queue import Queue
+from stack import Stack
 """
 Binary search trees are a data structure that enforce an ordering over 
 the data they store. That ordering in turn makes it a lot more efficient 
@@ -19,14 +21,14 @@ class BSTNode:
     def insert(self, value):
         if value < self.value:
           if self.left:
-            return self.left.insert(value)
+            self.left.insert(value)
           else:
-            self.left = type(self)(value)
+            self.left = BSTNode(value)
         else:
           if self.right:
-            return self.right.insert(value)
+            self.right.insert(value)
           else:
-            self.right = type(self)(value)
+            self.right = BSTNode(value)
 
     # Return True if the tree contains the value
     # False if it does not
@@ -64,17 +66,37 @@ class BSTNode:
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self):
-        pass
+        if self.left:
+          self.left.in_order_print()
+        print(self.value)
+        if self.right:
+          self.right.in_order_print()
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self):
-        pass
+        queue = Queue()
+        queue.enqueue(self)
+        while(len(queue) > 0):
+          node = queue.dequeue()
+          print(node.value)
+          if node.left:
+            queue.enqueue(node.left)
+          if node.right:
+            queue.enqueue(node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self):
-        pass
+        stack = Stack()
+        stack.push(self)
+        while(len(stack) > 0):
+          node = stack.pop()
+          print(node.value)
+          if node.left:
+            stack.push(node.left)
+          if node.right:
+            stack.push(node.right)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
@@ -100,13 +122,13 @@ bst.insert(3)
 bst.insert(4)
 bst.insert(2)
 
-# bst.bft_print()
-# bst.dft_print()
+bst.bft_print()
+bst.dft_print()
 
 # print("elegant methods")
 # print("pre order")
 # bst.pre_order_dft()
-# print("in order")
-# bst.in_order_dft()
+print("in order")
+bst.in_order_print()
 # print("post order")
 # bst.post_order_dft()  
